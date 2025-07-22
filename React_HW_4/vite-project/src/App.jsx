@@ -26,8 +26,6 @@ const sortUsers = ((dataName) => {
       setSortDir("asc");
     }
   }
-  // console.log(dataName);
-  // console.log(sortDir);
 });
 
 const getSortedArray = ((arrayToSort) => {
@@ -64,6 +62,21 @@ const minMaxKids = {
   max: Math.max(...allKids),
 }
 
+const applyFilters = (currentFilterValues) => {
+  const {name, minAge, maxAge, kids, vaccinated} = currentFilterValues;
+
+  const newFilteredPatients = patientsData.filter((patient) => {
+    const matchesName = (name === "" || patient.name.toLowerCase().includes(name.toLowerCase()) || patient.surname.toLowerCase().includes(name.toLowerCase()));
+    const matchesMinAge = (minAge === "" || patient.age >= minAge);
+    const matchesMaxAge = (maxAge === "" || patient.age <= maxAge);
+    const matchesKids = (kids === "" || patient.kids === kids);
+    const matchesVaccinated = (!vaccinated || patient.vaccinated === true);
+
+    return matchesName && matchesMinAge && matchesMaxAge && matchesKids && matchesVaccinated;
+  });
+
+  
+}
 
 
 //Состояния для пагинации
