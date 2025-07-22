@@ -1,6 +1,6 @@
 import React from "react";
 
-function TableHead() {
+function TableHead({sortKey, sortDir, onSort}) {
     const headers = [
         {name: "Имя", dataName: "name"},
         {name: "Фамилия", dataName: "surname"},
@@ -13,7 +13,11 @@ function TableHead() {
         <thead className="table-head">
             <tr className="table-head-row">
                 {headers.map((header) => (
-                    <th key={header.dataName} className="table-head-cell" data-name={header.dataName}>{header.name}</th> 
+                    <th key={header.dataName} className="table-head-cell" data-name={header.dataName} onClick={() => onSort(header.dataName)}>
+                        {header.name}
+                        {sortKey === header.dataName && sortDir === "asc" && " ▲"}
+                        {sortKey === header.dataName && sortDir === "desc" && " ▼"}
+                    </th> 
                 ))}
             </tr>
         </thead>
