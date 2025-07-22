@@ -26,8 +26,8 @@ const sortUsers = ((dataName) => {
       setSortDir("asc");
     }
   }
-  console.log(dataName);
-  console.log(sortDir);
+  // console.log(dataName);
+  // console.log(sortDir);
 });
 
 const getSortedArray = ((arrayToSort) => {
@@ -40,6 +40,19 @@ const getSortedArray = ((arrayToSort) => {
   }
 });
 
+const sortedPatients = getSortedArray(patientsData);
+
+// Состояния для фильтрации
+const [filterValues, setFilterValues] = useState({
+  name: "",
+  minAge: "",
+  maxAge: "",
+  kids: "",
+  vaccinated: false
+});
+
+
+
 
 //Состояния для пагинации
 const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +64,7 @@ const [currentPageItems, setCurrentPageItems] = useState();
     <div className="app-wrapper">
       <h1 className='app-title'>Список пациентов</h1>
       <FilterForm></FilterForm>
-      <Table patients={patients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers} sortedArrayFunc={getSortedArray}></Table>
+      <Table patients={patients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers} sortedArray={sortedPatients}></Table>
       <Pagination></Pagination>
     </div>
     </>
