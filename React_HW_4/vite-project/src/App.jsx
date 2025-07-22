@@ -51,6 +51,18 @@ const [filterValues, setFilterValues] = useState({
   vaccinated: false
 });
 
+const allAges = patientsData.map(patient => patient.age);
+const allKids = patientsData.map(patient => patient.kids);
+
+const minMaxAges = {
+  min: Math.min(...allAges),
+  max: Math.max(...allAges),
+}
+
+const minMaxKids = {
+  min: Math.min(...allKids),
+  max: Math.max(...allKids),
+}
 
 
 
@@ -64,7 +76,7 @@ const [currentPageItems, setCurrentPageItems] = useState();
     <div className="app-wrapper">
       <h1 className='app-title'>Список пациентов</h1>
       <FilterForm></FilterForm>
-      <Table patients={patients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers} sortedArray={sortedPatients}></Table>
+      <Table patients={sortedPatients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers}></Table>
       <Pagination></Pagination>
     </div>
     </>

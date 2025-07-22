@@ -1,10 +1,10 @@
 import React from "react";
 import TableRow from "./TableRow";
 
-function TableBody({patients, sortedArray}) {
+function TableBody({patients}) {
     return (
         <tbody>
-            {sortedArray.map((patient) => (
+            {patients.map((patient) => (
                 <TableRow key={patient.name + patient.surname} patient={patient}></TableRow>
             ))}
         </tbody>
