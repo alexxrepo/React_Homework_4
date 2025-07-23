@@ -38,7 +38,7 @@ const getSortedArray = ((arrayToSort) => {
   }
 });
 
-const sortedPatients = getSortedArray(patientsData);
+// const sortedPatients = getSortedArray(patientsData);
 
 // Состояния для фильтрации
 const [filterValues, setFilterValues] = useState({
@@ -65,7 +65,7 @@ const minMaxKids = {
 const applyFilters = (currentFilterValues) => {
   const {name, minAge, maxAge, kids, vaccinated} = currentFilterValues;
 
-  const newFilteredPatients = patientsData.filter((patient) => {
+  const newFilteredPatients = patients.filter((patient) => {
     const matchesName = (name === "" || patient.name.toLowerCase().includes(name.toLowerCase()) || patient.surname.toLowerCase().includes(name.toLowerCase()));
     const matchesMinAge = (minAge === "" || patient.age >= minAge);
     const matchesMaxAge = (maxAge === "" || patient.age <= maxAge);
@@ -75,7 +75,18 @@ const applyFilters = (currentFilterValues) => {
     return matchesName && matchesMinAge && matchesMaxAge && matchesKids && matchesVaccinated;
   });
 
-  
+  setPatients(newFilteredPatients);
+}
+
+const handleFilterChange = (filterName, value) => {
+  setFilterValues((previousValues) => {
+    const updatedValues = {
+      ...previousValues,
+      [filterName]: value,
+    }
+    applyFilters(updatedValues);
+    return updatedValues;
+  });
 }
 
 
@@ -88,8 +99,8 @@ const [currentPageItems, setCurrentPageItems] = useState();
     <>
     <div className="app-wrapper">
       <h1 className='app-title'>Список пациентов</h1>
-      <FilterForm></FilterForm>
-      <Table patients={sortedPatients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers}></Table>
+      <FilterForm filterValues={filterValues} onFilterChange={handleFilterChange}></FilterForm>
+      <Table patients={patients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers}></Table>
       <Pagination></Pagination>
     </div>
     </>

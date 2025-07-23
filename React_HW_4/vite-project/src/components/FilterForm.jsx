@@ -3,13 +3,13 @@ import React from "react";
 function FilterForm({filterValues, onFilterChange}) {
     return (
         <div className="filter-form">
-            {/* <div className="filter">
+            <div className="filter">
                 <label htmlFor="name-filter">Имя:</label>
                 <input type="text" className="filter-input" id="name-filter" name="name" value={filterValues.name} onChange={onFilterChange}></input>
             </div>
             <div className="filter">
                 <label htmlFor="min-age-filter">Минимальный возраст:</label>
-                <input type="number" className="filter-input" id="min-age-filter" name="surname" value={filterValues.minAge} onChange={onFilterChange}></input>
+                <input type="number" className="filter-input" id="min-age-filter" name="minAge" value={filterValues.minAge} onChange={onFilterChange}></input>
             </div>
             <div className="filter">
                 <label htmlFor="max-age-filter">Максимальный возраст:</label>
@@ -22,7 +22,7 @@ function FilterForm({filterValues, onFilterChange}) {
             <div className="filter">
                 <label htmlFor="vaccinated-filter">Наличие прививки</label>
                 <input type="checkbox" className="filter-checkbox" id="vaccinated-filter" name="vaccinated" checked={filterValues.vaccinated} onChange={onFilterChange}></input>
-            </div> */}
+            </div>
         </div>
     );
 }
