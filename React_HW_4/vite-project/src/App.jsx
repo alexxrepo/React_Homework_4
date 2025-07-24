@@ -7,6 +7,7 @@ import Pagination from './components/Pagination';
 
 function App() {
 const [patients, setPatients] = useState(patientsData);
+const [patientsToShow, setPatientsToShow] = useState(patientsData);
 
 // Состояния для сортировки
 const [sortKey, setSortKey] = useState("none");
@@ -28,6 +29,7 @@ const sortUsers = ((dataName) => {
   }
 });
 
+
 const getSortedArray = ((arrayToSort) => {
   if (sortDir === "asc") {
     return [...arrayToSort].sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1));
@@ -38,7 +40,7 @@ const getSortedArray = ((arrayToSort) => {
   }
 });
 
-// const sortedPatients = getSortedArray(patientsData);
+// const sortedPatients = getSortedArray(patients);
 
 // Состояния для фильтрации
 const [filterValues, setFilterValues] = useState({
@@ -49,23 +51,23 @@ const [filterValues, setFilterValues] = useState({
   vaccinated: false
 });
 
-const allAges = patientsData.map(patient => patient.age);
-const allKids = patientsData.map(patient => patient.kids);
+// const allAges = patientsData.map(patient => patient.age);
+// const allKids = patientsData.map(patient => patient.kids);
 
-const minMaxAges = {
-  min: Math.min(...allAges),
-  max: Math.max(...allAges),
-}
+// const minMaxAges = {
+//   min: Math.min(...allAges),
+//   max: Math.max(...allAges),
+// }
 
-const minMaxKids = {
-  min: Math.min(...allKids),
-  max: Math.max(...allKids),
-}
+// const minMaxKids = {
+//   min: Math.min(...allKids),
+//   max: Math.max(...allKids),
+// }
 
 const applyFilters = (currentFilterValues) => {
   const {name, minAge, maxAge, kids, vaccinated} = currentFilterValues;
 
-  const newFilteredPatients = patients.filter((patient) => {
+  let filteredPatients = patients.filter((patient) => {
     const matchesName = (name === "" || patient.name.toLowerCase().includes(name.toLowerCase()) || patient.surname.toLowerCase().includes(name.toLowerCase()));
     const matchesMinAge = (minAge === "" || patient.age >= minAge);
     const matchesMaxAge = (maxAge === "" || patient.age <= maxAge);
@@ -74,9 +76,10 @@ const applyFilters = (currentFilterValues) => {
 
     return matchesName && matchesMinAge && matchesMaxAge && matchesKids && matchesVaccinated;
   });
-
-  setPatients(newFilteredPatients);
+  filteredPatients = getSortedArray(filteredPatients);
+  setPatientsToShow(filteredPatients);
 }
+
 
 const handleFilterChange = (filterName, value) => {
   setFilterValues((previousValues) => {
@@ -100,7 +103,7 @@ const [currentPageItems, setCurrentPageItems] = useState();
     <div className="app-wrapper">
       <h1 className='app-title'>Список пациентов</h1>
       <FilterForm filterValues={filterValues} onFilterChange={handleFilterChange}></FilterForm>
-      <Table patients={patients} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers}></Table>
+      <Table patients={patientsToShow} sortKey={sortKey} sortDir={sortDir} onSort={sortUsers}></Table>
       <Pagination></Pagination>
     </div>
     </>
